@@ -19,7 +19,7 @@ from board import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.index),      #127.0.0.1:8000
+    path('', views.index, name='index'),      #127.0.0.1:8000
     path('board/', include('board.urls')),      #BOARD 하위 주소도 포함하도록 함
-
+    path('common/', include('common.urls')),
 ]

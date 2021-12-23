@@ -1,56 +1,83 @@
 {% extends 'base.html' %}
 {% block content %}
-<body>
-<div class="container">
-    <h2 class = "border-bottom">{{ question.subject }}</h2>
-    <div class="card my-3">
-        <div class="card-body">
-            <div class="card-text">
-                {{ question.content }}
-            </div>
-            <div class ="d-flex justify-content-end">
-                <div class="badge badge-light p-2">
+<h2 class = "border-bottom">{{ question.subject }}</h2>
+<div class="card my-3">
+    <div class="card-body">
+        <div class="card-text">
+            {{ question.content }}
+        </div>
+        <div class ="d-flex justify-content-end">
+            <div class="badge badge-light p-2 text-left ">
+                <div class="mb-2">{{ question.author }}</div>
                 {{ question.create_date }}
-                </div>
             </div>
         </div>
-    </div>
-    <h5 class="border-bottom my-3 py-2">
-        {{ question.answer_set.count }}개의 답변이 있습니다.
-    </h5>
-                    {% for answer in question.answer_set.all %}
-    <div class ="card my-3">
-        <div class ="card-body">
-            <div class="card-text" style="white-space: pre-line">
-                {{ answer.content }}
-            </div>
-            <div class ="d-flex justify-content-end">
-                <div class="badge badge-light p-2">
-                    {{ answer.create_date }}
-                </div>
-            </div>
+        {% if request.user == question.author %}
+        <div>
+            <a href="{% url 'board:question_modify' question.id %}"
+               class="btn btn-sm btn-outline-secondary">수정</a>
+            <a href="#"
+               data-uri="{% url 'board:question_delete' question.id %}"
+               class="delete btn btn-sm btn-outline-secondary">삭제</a>
         </div>
-    </div>
-    {% endfor %}
-    <form action = "{% url 'board:answer_create' question.id %}"
-          method ="post" class="my-3">
-        {% csrf_token %}
-            <!--  오류 표시 Start   -->
-        {% if form.errors %}
-            <div class= "alert alert-danger">
-                {% for field in form %}
-                    {% if field.errors %}
-                        <strong>{{ field.label }} </strong>
-                            {{ field.errors }}
-                    {% endif %}
-                {% endfor %}
-            </div>
         {% endif %}
-        <div class="form-group">
-            <textarea name ="content" id ="content"
-                      class="form-control" rows="7">{{ form.content.value | default_if_none:'' }}</textarea>
-        </div>
-        <input type ="submit" value="답변등록" class="btn btn-primary">
-    </form>
+    </div>
 </div>
+<h5 class="border-bottom my-3 py-2">
+    {{ question.answer_set.count }}개의 답변이 있습니다.
+</h5>
+                {% for answer in question.answer_set.all %}
+<div class ="card my-3">
+    <div class ="card-body">
+        <div class="card-text" style="white-space: pre-line">
+            {{ answer.content }}
+        </div>
+        <div class ="d-flex justify-content-end">
+            <div class="badge badge-light text-left p-2">
+                <div class="mb-2">{{ answer.author }}</div>
+                {{ answer.create_date }}
+            </div>
+        </div>
+        {% if request.user == answer.author %}
+        <div class="my-3">
+            <a href ="{% url 'board:answer_modify' answer.id %}"
+               class="btn btn-sm btn-outline-secondary">수정</a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endfor %}
+<form action = "{% url 'board:answer_create' question.id %}"
+      method ="post" class="my-3">
+    {% csrf_token %}
+        <!--  오류 표시 Start   -->
+    {% if form.errors %}
+        <div class= "alert alert-danger">
+            {% for field in form %}
+                {% if field.errors %}
+                    <strong>{{ field.label }} </strong>
+                        {{ field.errors }}
+                {% endif %}
+            {% endfor %}
+        </div>
+    {% endif %}
+    <div class="form-group">
+        <textarea name ="content" id ="content"
+                  class="form-control" rows="7"
+            {% if not user.is_authenticated %}
+                disabled{% endif %}></textarea>
+    </div>
+    <input type ="submit" value="답변등록" class="btn btn-primary">
+</form>
+{% endblock %}
+{% block script %}
+<script>
+    $(document).ready(function(){
+        $(".delete").on('click', function(){
+            if(confirm('정말로 삭제하시겠습니까?')){
+                location.href = $(this).data('uri')
+            }
+        });
+    });
+</script>
 {% endblock %}
