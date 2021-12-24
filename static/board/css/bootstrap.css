@@ -4,6 +4,10 @@
  * Copyright 2011-2021 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
+
+.comment {
+    border-top:dotted 1px #ddd;
+    font-size: 0.7em;}
 :root {
   --blue: #007bff;
   --indigo: #6610f2;
