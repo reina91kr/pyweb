@@ -21,4 +21,4 @@ def vote(request, pk):
     else:
         sel_choice.votes = sel_choice.votes + 1
         sel_choice.save()
-        return render(request, 'poll/result.html', {'question': question})
+        return render(request, 'poll/vote_result.html', {'question': question})

@@ -7,17 +7,23 @@
     <link rel="stylesheet" href="{% static 'board/css/bootstrap.css' %}">
     <link rel="stylesheet" href="{% static 'board/css/style.css' %}">
 </head>
+
 <body>
+
 <div class="container">
+
+<!--  NAVBAR Start  -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
         <a class="navbar-brand" href="{% url 'board:index' %}">Board</a>
-        <!--  햄버거 메뉴  -->
+
+    <!--  햄버거 메뉴  -->
         <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse"
                 data-target="#navbarNav" aria-controls="navbarNav"
                 aria-expanded="false" aria-label="Toggle navigation">
            <span class="navbar-toggler-icon"></span>
         </button>
-        <!--  로그인 메뉴  -->
+
+    <!--  NAVBAR 메뉴목록  -->
         <div class="collapse navbar-collapse flex-grow-0" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item">
@@ -36,16 +42,30 @@
             </li>
             </ul>
         </div>
-    </nav>
-{% block content %}
 
-{% endblock %}
-</div>
-<script src="{% static 'board/js/jquery-3.6.0.js' %}"></script>
-<script src="{% static 'board/js/bootstrap.js' %}"></script>
+    </nav>
+<!--  NAVBAR End  -->
+
+<!-- 본문영역 Start -->
+    {% block content %}
+
+    {% endblock %}
+<!-- 본문영역 End -->
+
+<!-- 바닥글 영역 Start -->
+    {% include 'footer.html' %}
+<!-- 바닥글 영역 End  -->
+
+<!-- 자바스크립트 영역 Start -->
+    <script src="{% static 'board/js/jquery-3.6.0.js' %}"></script>
+    <script src="{% static 'board/js/bootstrap.js' %}"></script>
+
 {% block script %}
 
 {% endblock %}
+<!-- 자바스크립트 영역 End -->
+
+</div>
 </body>
 </html>
 

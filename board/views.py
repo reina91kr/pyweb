@@ -142,19 +142,19 @@ def comment_delete_question(request, comment_id):
 
 @login_required(login_url='common:login')
 def comment_create_answer(request, answer_id):
-    answer=get_object_or_404(Answer, pk=answer_id)
+    answer = get_object_or_404(Answer, pk=answer_id)
     if request.method == "POST":
-        form=CommentForm(request.POST)
+        form = CommentForm(request.POST)
         if form.is_valid():
-            comment=form.save(commit=False)
+            comment = form.save(commit=False)
             comment.author = request.user
-            comment.create_date=timezone.now()
+            comment.create_date = timezone.now()
             comment.answer = answer
             comment.save()
             return redirect('board:detail', question_id=comment.answer.question.id)
-        else:
-            form=CommentForm()
-    return render(request, 'board/comment_form.html', {'form': form})
+    else:
+        form = CommentForm()
+        return render(request, 'board/comment_form.html', {'form': form})
 
 @login_required(login_url='common:login')
 def comment_modify_answer(request, comment_id):
@@ -176,3 +176,21 @@ def comment_delete_answer(request, comment_id):
     comment = get_object_or_404(Comment, pk=comment_id)
     comment.delete()
     return redirect ('board:detail', question_id=comment.question_id)
+
+@login_required(login_url='common:login')
+def vote_question(request, question_id):
+    question = get_object_or_404(Question, pk=question_id)
+    if request.user == question.author:
+        messages.error(request, '본인이 작성한 글은 추천할 수 없습니다')
+    else:
+        question.voter.add(request.user)
+    return redirect('board:detail', question_id=question.id)
+
+@login_required(login_url='common:login')
+def vote_answer(request, answer_id):
+    answer = get_object_or_404(Answer, pk=answer_id)
+    if request.user == answer.author:
+        messages.error(request, '본인이 작성한 글은 추천할 수 없습니다')
+    else:
+        answer.voter.add(request.user)
+    return redirect('board:detail', question_id=answer.question.id)
