@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <title>Hi~ Pyweb</title>
     <link rel="stylesheet" href="{% static 'board/css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'board/css/style.css' %}">
 </head>
 <body>
 <div class="container">
@@ -26,6 +27,13 @@
                     <a class="nav-link" href="{% url 'common:login' %}">로그인</a>
                     {% endif %}
                 </li>
+                <li class="nav-item">
+                   <a class="nav-link" href ="{% url 'board:boardlist' %}">질문/답변</a>
+                </li>
+                <li class="nav-item">
+                   <a class="nav-link" href ="{% url 'poll:index' %}">설문조사</a>
+                </li>
+            </li>
             </ul>
         </div>
     </nav>

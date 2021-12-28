@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="jumbotron">
+    <div class="text-center">
+        <h1>투표결과</h1>
+    </div>
+</div>
+<h4>{{ question.question_text }}</h4>
+<ul>
+    {% for choice in question.choice_set.all %}
+    <li>
+        {{ choice.choice_text }} -- {{ choice.votes }} votes
+    </li>
+    {% endfor %}
+</ul>
+
+{% endblock %}

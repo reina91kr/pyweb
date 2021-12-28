@@ -8962,7 +8962,7 @@ button.bg-dark:focus {
     margin-left: auto !important;
   }
 }
-
+/*모바일 기준 */
 @media (min-width: 768px) {
   .m-md-0 {
     margin: 0 !important;
@@ -10067,7 +10067,7 @@ button.bg-dark:focus {
     text-align: center !important;
   }
 }
-
+/* pc 기준 */
 @media (min-width: 992px) {
   .text-lg-left {
     text-align: left !important;
