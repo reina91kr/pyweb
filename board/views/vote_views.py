@@ -2,8 +2,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect
 
-from board.models import Answer
-from board.models import Question
+from board.models import Answer, Question
 
 
 @login_required(login_url='common:login')
