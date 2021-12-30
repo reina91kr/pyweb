@@ -1,4 +1,4 @@
-import views as views
+import board.views as views
 from django.urls import path
 from board.views import base_views, question_views, answer_views, vote_views, comment_views
 
