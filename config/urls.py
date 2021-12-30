@@ -15,11 +15,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from board import views
+from board.views import base_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.index, name='index'),      #127.0.0.1:8000
+    path('', base_views.index, name='index'),      #127.0.0.1:8000
     path('board/', include('board.urls')),      #BOARD 하위 주소도 포함하도록 함
     path('common/', include('common.urls')),
     path('poll/', include('poll.urls')),
