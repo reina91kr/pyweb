@@ -30,7 +30,6 @@
         <tbody>
             {% if question_list %}
                 {% for question in question_list %}
-                    <tr class ="text-center">
                         <!-- 번호 -->
                         <td>{{ question_list.paginator.count|sub:question_list.start_index|sub:forloop.counter0|add:1 }}</td>
                         <!-- 추천 -->
